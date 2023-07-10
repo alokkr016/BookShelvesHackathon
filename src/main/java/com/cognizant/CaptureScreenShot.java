@@ -12,9 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CaptureScreenShot {
-    static WebDriver driver = DriverSetup.getDriver("chrome");
 
-    public  void takeScreenshot(){
+    public  void takeScreenshot(WebDriver driver){
 
         TakesScreenshot shot = (TakesScreenshot) driver;
         File screenshotFile =  shot.getScreenshotAs(OutputType.FILE);
