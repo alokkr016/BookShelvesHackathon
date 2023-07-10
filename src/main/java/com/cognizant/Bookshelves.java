@@ -1,16 +1,16 @@
 package com.cognizant;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class Bookshelves {
@@ -20,9 +20,10 @@ public class Bookshelves {
 	public JavascriptExecutor js;
 	ReportGenerator report;
 	CaptureScreenShot capture;
+	@Parameters({"browserType"})
 	@BeforeTest
-	public void launchThePage() throws InterruptedException {
-		driver = DriverSetup.getDriver("Chrome");
+	public void launchThePage(String browserType) throws InterruptedException, IOException {
+		driver = DriverSetup.getDriver(browserType);
 		report = new ReportGenerator();
 		capture = new CaptureScreenShot();
 		// Launch and maximize
@@ -38,18 +39,17 @@ public class Bookshelves {
 		// Scroll down
 		js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollBy(0,500)");
-		capture.takeScreenshot();
+		capture.takeScreenshot(driver);
 		report.logsInfo("Clicking on bookshelves");
 		// click on bookshelves
 		driver.findElement(By.xpath("//*[@id=\"content\"]/div[3]/div/div[3]/a[5]")).click();
 		Thread.sleep(5000);
 
-		// To close the pop up
+		// To close the pop-up
 		report.logsInfo("Close the pop-up");
 		driver.findElement(By.xpath("//*[@id=\"authentication_popup\"]/div[1]/div/div[2]/a[1]")).click();
-		capture.takeScreenshot();
 		Thread.sleep(3000);
-
+		capture.takeScreenshot(driver);
 	}
 
 	@Test(priority = 1)
@@ -73,11 +73,11 @@ public class Bookshelves {
 		driver.findElement(By.xpath("//*[@id=\"filters-form\"]/div[1]/div/div/ul/li[2]/div[1]/div")).click();
 		Thread.sleep(5000);
 
-		report.logsInfo("Applyting open filter");
+		report.logsInfo("Applying open filter");
 		// select open
 		driver.findElement(By.xpath("//input[@id='filters_storage_type_Open']")).click();
 		Thread.sleep(3000);
-		capture.takeScreenshot();
+		capture.takeScreenshot(driver);
 	}
 
 	@Test(priority = 2)
@@ -109,7 +109,7 @@ public class Bookshelves {
 		js.executeScript("arguments[0].scrollIntoView();", navbar);
 		Thread.sleep(3000);
 
-		report.logsInfo("Click on giftcard");
+		report.logsInfo("Click on gift card");
 		// click on Gift card
 		driver.findElement(By.xpath("//*[@id=\"header\"]/section/div/ul[2]/li[3]/a")).click();
 	}
@@ -143,9 +143,9 @@ public class Bookshelves {
 				By.xpath("//*[@id=\'app-container\']/div/main/section/section[2]/div/section[2]/div[4]/select[2]")));
 		date.selectByVisibleText("18");
 
-		// Click on next button
+		// Click on the next button
 		driver.findElement(By.xpath("//button[@class='_1IFIb _1fVSi action-button _1gIUf _1XfDi']")).click();
-		capture.takeScreenshot();
+		capture.takeScreenshot(driver);
 		report.logsInfo("Filled details successfully & clicked on next button");
 	}
 
@@ -172,10 +172,10 @@ public class Bookshelves {
 		driver.findElement(By.id("ip_567727260")).sendKeys(senderDetails[4]);
 		Thread.sleep(3000);
 
-		report.logsInfo("Capturing pincode error message");
-		// Getting Pincode error message
+		report.logsInfo("Capturing pin code error message");
+		// Getting a Pin code error message
 		String pincodeError = driver.findElement(By.xpath("//div[@class='_1HVuH']")).getText();
-		capture.takeScreenshot();
+		capture.takeScreenshot(driver);
 		System.out.println(pincodeError);
 
 		report.logsInfo("Correcting the details");
@@ -185,11 +185,11 @@ public class Bookshelves {
 		driver.findElement(By.id("ip_567727260")).sendKeys("560005");
 		Thread.sleep(3000);
 
-		// clicking on confirm button
+		// clicking on the confirmation button
 		driver.findElement(By.xpath("//button[@class='_3Hxyv _1fVSi action-button _1gIUf _1XfDi']")).click();
 
 		report.logsInfo("Capturing incorrect mobile No. error message");
-		// Getting mobile number error message
+		// Getting a mobile number error message
 		String mobileNoError = driver.findElement(By.xpath("//input[@name='recipient_mobile_number']"))
 				.getAttribute("title");
 		System.out.println(mobileNoError);
@@ -198,9 +198,9 @@ public class Bookshelves {
 		driver.findElement(By.id("ip_3177473671")).clear();
 		driver.findElement(By.id("ip_3177473671")).sendKeys("8985425562");
 		Thread.sleep(3000);
-		capture.takeScreenshot();
+		capture.takeScreenshot(driver);
 		report.logsInfo("After correcting details, Clicking Next button");
-		// clicking on confirm button
+		// clicking on the confirmation button
 		driver.findElement(By.xpath("//button[@class='_3Hxyv _1fVSi action-button _1gIUf _1XfDi']")).click();
 		Thread.sleep(3000);
 
