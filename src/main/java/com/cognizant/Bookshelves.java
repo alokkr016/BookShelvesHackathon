@@ -19,11 +19,12 @@ public class Bookshelves {
 	public WebDriver driver;
 	public JavascriptExecutor js;
 	ReportGenerator report;
-
+	CaptureScreenShot capture;
 	@BeforeTest
 	public void launchThePage() throws InterruptedException {
 		driver = DriverSetup.getDriver("Chrome");
 		report = new ReportGenerator();
+		capture = new CaptureScreenShot();
 		// Launch and maximize
 		driver.get(baseUrl);
 		driver.manage().window().maximize();
@@ -37,7 +38,7 @@ public class Bookshelves {
 		// Scroll down
 		js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollBy(0,500)");
-
+		capture.takeScreenshot();
 		report.logsInfo("Clicking on bookshelves");
 		// click on bookshelves
 		driver.findElement(By.xpath("//*[@id=\"content\"]/div[3]/div/div[3]/a[5]")).click();
@@ -46,6 +47,7 @@ public class Bookshelves {
 		// To close the pop up
 		report.logsInfo("Close the pop-up");
 		driver.findElement(By.xpath("//*[@id=\"authentication_popup\"]/div[1]/div/div[2]/a[1]")).click();
+		capture.takeScreenshot();
 		Thread.sleep(3000);
 
 	}
@@ -75,6 +77,7 @@ public class Bookshelves {
 		// select open
 		driver.findElement(By.xpath("//input[@id='filters_storage_type_Open']")).click();
 		Thread.sleep(3000);
+		capture.takeScreenshot();
 	}
 
 	@Test(priority = 2)
@@ -142,6 +145,7 @@ public class Bookshelves {
 
 		// Click on next button
 		driver.findElement(By.xpath("//button[@class='_1IFIb _1fVSi action-button _1gIUf _1XfDi']")).click();
+		capture.takeScreenshot();
 		report.logsInfo("Filled details successfully & clicked on next button");
 	}
 
@@ -171,6 +175,7 @@ public class Bookshelves {
 		report.logsInfo("Capturing pincode error message");
 		// Getting Pincode error message
 		String pincodeError = driver.findElement(By.xpath("//div[@class='_1HVuH']")).getText();
+		capture.takeScreenshot();
 		System.out.println(pincodeError);
 
 		report.logsInfo("Correcting the details");
@@ -193,7 +198,7 @@ public class Bookshelves {
 		driver.findElement(By.id("ip_3177473671")).clear();
 		driver.findElement(By.id("ip_3177473671")).sendKeys("8985425562");
 		Thread.sleep(3000);
-
+		capture.takeScreenshot();
 		report.logsInfo("After correcting details, Clicking Next button");
 		// clicking on confirm button
 		driver.findElement(By.xpath("//button[@class='_3Hxyv _1fVSi action-button _1gIUf _1XfDi']")).click();
