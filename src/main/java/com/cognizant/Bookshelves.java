@@ -1,15 +1,17 @@
 package com.cognizant;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -20,10 +22,10 @@ public class Bookshelves {
 	public JavascriptExecutor js;
 	ReportGenerator report;
 	CaptureScreenShot capture;
-	@Parameters({"browserType"})
+	@Parameters("browser")
 	@BeforeTest
-	public void launchThePage(String browserType) throws InterruptedException, IOException {
-		driver = DriverSetup.getDriver(browserType);
+	public void launchThePage(@Optional("chrome") String browser) throws InterruptedException, IOException {
+		driver = DriverSetup.getDriver(browser);
 		report = new ReportGenerator();
 		capture = new CaptureScreenShot();
 		// Launch and maximize
@@ -66,7 +68,7 @@ public class Bookshelves {
 		report.logsInfo("Applying the price filter");
 		// set on price range
 		action.dragAndDropBy(frame, -244, 0).perform();
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 
 		report.logsInfo("Applying storage filter");
 		// Click on storage caret
@@ -207,14 +209,13 @@ public class Bookshelves {
 		report.logsInfo("Navigating back to home page");
 		// navigating back
 		driver.navigate().back();
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 
 	}
 
 	@Test(priority = 5)
 	public void retrieveAllSubmenuItemsAtHome() throws InterruptedException {
 		report.testName("Fetching all submenu items applying @home filter");
-
 		report.logsInfo("Applied brand filter");
 		// clicking on brand filter
 		driver.findElement(By.xpath("//li[@data-group='brand']")).click();
