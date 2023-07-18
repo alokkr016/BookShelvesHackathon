@@ -10,8 +10,8 @@ The goal is to display bookshelves based on the following criteria:
 2. Out-of-stock items should also be included.
 3. The storage type of the bookshelves should be open.
 
-In addition, the script should retrieve the details of the first three study chairs with the highest recommendation, considering ties.
-
+<!--In addition, the script should retrieve the details of the first three study chairs with the highest recommendation, considering ties.
+-->
 ## Solution
 
 To solve the problem, the script performs the following steps:
